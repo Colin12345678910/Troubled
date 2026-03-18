@@ -15,10 +15,16 @@ public:
 	virtual void OnExit() = 0;
 	virtual void Update() = 0;
 	
-	FinState(StateMachine* stateMachine) { this->stateMachine = stateMachine; };
+	FinState(StateMachine* stateMachine)
+	{
+		this->stateMachine = stateMachine;
+	};
 	virtual ~FinState() { };
 
-	StateMachine* GetStateMachine() const { return this->stateMachine; };
+	StateMachine* GetStateMachine() const
+	{
+		return this->stateMachine;
+	};
 private:
 	StateMachine* stateMachine;
 };

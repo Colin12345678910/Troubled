@@ -5,10 +5,11 @@
 #include <string>
 
 #include "CoreMinimal.h"
+#include "StateMachine.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "TraitorStates/TraitorStates.h"
-#include "StateMachine.h"
+#include "UTraitorStateMachine.h"
 #include "TTTCharacter.generated.h"
 
 class UInputComponent;
@@ -34,6 +35,9 @@ class ATTTCharacter : public ACharacter
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
+
+	UPROPERTY(meta = (AllowPrivateAccess = "true"))
+	UTraitorStateMachine* statemachine;
 
 protected:
 
@@ -96,8 +100,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoAimEnd();
 
-	UFUNCTION(Server, Reliable)
-	void FireWeapon();
+
 
 protected:
 
@@ -110,9 +113,8 @@ protected:
 
 private:
 	bool isDead = false;
-	TraitorStateMachine statemachine = TraitorStateMachine(this);
-	TraitorAimState aimState = TraitorAimState(&statemachine);
-	TraitorIdleState idleState = TraitorIdleState(&statemachine);
+	TUniquePtr<TraitorAimState> aimState;
+	TUniquePtr<TraitorIdleState> idleState;
 
 public:
 	/** Returns the first person mesh **/

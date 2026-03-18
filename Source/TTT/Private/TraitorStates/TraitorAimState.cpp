@@ -11,9 +11,9 @@ void TraitorAimState::OnEnter()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s"),  TEXT("TraitorAimState::OnEnter"));
 
-	auto character = static_cast<TraitorStateMachine*>(GetStateMachine())->GetCharacter();
+	auto statemachine = static_cast<UTraitorStateMachine*>(GetStateMachine());
 
-	character->DoShoot();
+	statemachine->FireWeapon();
 }
 
 void TraitorAimState::OnExit()

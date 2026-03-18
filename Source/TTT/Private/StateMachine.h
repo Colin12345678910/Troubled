@@ -2,8 +2,6 @@
 #include "CoreMinimal.h"
 #include "FinState.h"
 
-class ATTTCharacter;
-
 class StateMachine
 {
 public:
@@ -12,15 +10,4 @@ public:
 
 private:
 	FinState* currentState = nullptr;
-};
-
-class TraitorStateMachine : public StateMachine
-{
-public:
-	void Initialize(ATTTCharacter* ch);
-	TraitorStateMachine(ATTTCharacter* character);
-
-	ATTTCharacter* GetCharacter() { return character; }
-private:
-	ATTTCharacter* character = nullptr;
 };

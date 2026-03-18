@@ -38,6 +38,11 @@ ATTTCharacter::ATTTCharacter()
 	FirstPersonCameraComponent->FirstPersonFieldOfView = 70.0f;
 	FirstPersonCameraComponent->FirstPersonScale = 0.6f;
 
+	statemachine = CreateDefaultSubobject<UTraitorStateMachine>(TEXT("Statemachine"));
+	statemachine->Initialize(this);
+	aimState = MakeUnique<TraitorAimState>(statemachine);
+	idleState = MakeUnique<TraitorIdleState>(statemachine);
+
 	// configure the character comps
 	GetMesh()->SetOwnerNoSee(true);
 	GetMesh()->FirstPersonPrimitiveType = EFirstPersonPrimitiveType::WorldSpaceRepresentation;
@@ -145,47 +150,17 @@ void ATTTCharacter::DoJumpEnd()
 
 void ATTTCharacter::DoAimStart()
 {
-	statemachine.TransitionState(&aimState);
+	statemachine->TransitionState(aimState.Get());
 }
 
 void ATTTCharacter::DoAimEnd()
 {
-	statemachine.TransitionState(&idleState);
+	statemachine->TransitionState(idleState.Get());
 }
 
 void ATTTCharacter::DoShoot()
 {
-	FireWeapon();
-}
-
-void ATTTCharacter::FireWeapon_Implementation()
-{
-	FVector pViewPointLocation;
-	FRotator pViewPointRotation;
-
-	auto world = GetWorld();
-
-	if (world)
-	{
-		this->Controller->GetPlayerViewPoint(OUT pViewPointLocation, OUT pViewPointRotation);
-
-		UE_LOG(LogTemp, Log, TEXT("Pew, Pew"));
-		FCollisionQueryParams CollisionParams(FName(""), false, this);
-		FVector endPoint = pViewPointLocation + pViewPointRotation.Vector() * 1000.0f;
-		FHitResult hit;
-
-		DrawDebugLine(world, pViewPointLocation, endPoint, FColor::Red, true, 30.0f, 0, 4);
-		if (world->LineTraceSingleByChannel(OUT hit, pViewPointLocation, endPoint, ECC_Visibility, CollisionParams))
-		{
-			
-			UE_LOG(LogTemp, Log, TEXT("Hit"));
-			//static_cast<ATTTPlayerState*>(this->GetPlayerState())->OnJoinMatch(hit.GetActor()->GetName());
-			FDamageEvent damageEvent;
-			damageEvent.DamageTypeClass = nullptr;
-			if (hit.GetActor() != this)
-				hit.GetActor()->TakeDamage(50.0f, damageEvent, this->Controller, this->GetOwner());
-		}
-	}
+	
 }
 
 

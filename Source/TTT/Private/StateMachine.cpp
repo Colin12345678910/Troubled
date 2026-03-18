@@ -18,13 +18,3 @@ void StateMachine::TransitionState(FinState* state)
 	currentState = state;
 	currentState->OnEnter();
 }
-
-void TraitorStateMachine::Initialize(ATTTCharacter* ch)
-{
-	this->character = ch;
-}
-
-TraitorStateMachine::TraitorStateMachine(ATTTCharacter* character)
-{
-	this->Initialize(character);
-}
