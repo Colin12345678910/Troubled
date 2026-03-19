@@ -28,3 +28,10 @@ public:
 private:
 	StateMachine* stateMachine;
 };
+
+class UTraitorStateMachine;
+class TraitorState : public FinState
+{
+public:
+	TraitorState(StateMachine* StateMachine) : FinState(StateMachine) {}
+};

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "FinState.h"
 
-class TraitorIdleState : public FinState
+class TraitorIdleState : public TraitorState
 {
 public:
 	virtual void OnInitialization() override;
@@ -9,5 +9,5 @@ public:
 	virtual void OnExit() override;
 	virtual void Update() override;
 
-	TraitorIdleState(StateMachine* sm) : FinState(sm) {}
+	TraitorIdleState(StateMachine* sm) : TraitorState(sm) {}
 };

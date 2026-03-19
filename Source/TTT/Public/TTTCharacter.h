@@ -36,7 +36,7 @@ class ATTTCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
 
-	UPROPERTY(meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(meta = (AllowPrivateAccess = "true"), BlueprintReadOnly, Category="Components")
 	UTraitorStateMachine* statemachine;
 
 protected:
@@ -77,31 +77,21 @@ protected:
 	void LookInput(const FInputActionValue& Value);
 
 	/** Handles aim inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category="-Input")
 	virtual void DoAim(float Yaw, float Pitch);
 
 	/** Handles move inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category="-Input")
 	virtual void DoMove(float Right, float Forward);
 
 	/** Handles jump start inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category="-Input")
 	virtual void DoJumpStart();
 
 	/** Handles jump end inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category="-Input")
 	virtual void DoJumpEnd();
-
-	/** Handles jump start inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoAimStart();
-
-	/** Handles jump end inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
-	virtual void DoAimEnd();
-
-
-
+	
 protected:
 
 	/** Set up input action bindings */
@@ -113,8 +103,6 @@ protected:
 
 private:
 	bool isDead = false;
-	TUniquePtr<TraitorAimState> aimState;
-	TUniquePtr<TraitorIdleState> idleState;
 
 public:
 	/** Returns the first person mesh **/
@@ -123,5 +111,8 @@ public:
 	/** Returns first person camera component **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+	//These need to be moved to the statemachine itself
+	TUniquePtr<TraitorAimState> aimState;
+	TUniquePtr<TraitorIdleState> idleState;
 };
 

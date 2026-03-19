@@ -42,6 +42,7 @@ ATTTCharacter::ATTTCharacter()
 	statemachine->Initialize(this);
 	aimState = MakeUnique<TraitorAimState>(statemachine);
 	idleState = MakeUnique<TraitorIdleState>(statemachine);
+	statemachine->TransitionState(idleState.Get());
 
 	// configure the character comps
 	GetMesh()->SetOwnerNoSee(true);
@@ -71,8 +72,6 @@ void ATTTCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		// Looking/Aiming
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATTTCharacter::LookInput);
 		EnhancedInputComponent->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &ATTTCharacter::LookInput);
-
-		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &ATTTCharacter::DoShoot);
 	}
 	else
 	{
@@ -147,21 +146,5 @@ void ATTTCharacter::DoJumpEnd()
 	// pass StopJumping to the character
 	StopJumping();
 }
-
-void ATTTCharacter::DoAimStart()
-{
-	statemachine->TransitionState(aimState.Get());
-}
-
-void ATTTCharacter::DoAimEnd()
-{
-	statemachine->TransitionState(idleState.Get());
-}
-
-void ATTTCharacter::DoShoot()
-{
-	
-}
-
 
 
