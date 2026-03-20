@@ -3,7 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-class StateMachine;
+#include "EActionContext.h"
+class UStateMachine;
 /** A Basic Implementation of a StateMachine.
  * 
  */
@@ -15,23 +16,25 @@ public:
 	virtual void OnExit() = 0;
 	virtual void Update() = 0;
 	
-	FinState(StateMachine* stateMachine)
+	FinState(UStateMachine* stateMachine)
 	{
 		this->stateMachine = stateMachine;
 	};
 	virtual ~FinState() { };
 
-	StateMachine* GetStateMachine() const
+	UStateMachine* GetStateMachine() const
 	{
 		return this->stateMachine;
 	};
 private:
-	StateMachine* stateMachine;
+	UStateMachine* stateMachine;
 };
 
-class UTraitorStateMachine;
 class TraitorState : public FinState
 {
 public:
-	TraitorState(StateMachine* StateMachine) : FinState(StateMachine) {}
+	TraitorState(UStateMachine* StateMachine) : FinState(StateMachine) {}
+
+	virtual void Client_OnActionContext(EActionContext ctx) {};
+	virtual void Server_OnActionContext(EActionContext ctx) {};
 };

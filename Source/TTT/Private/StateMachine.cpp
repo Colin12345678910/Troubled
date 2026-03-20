@@ -1,20 +1,44 @@
 ﻿#include "StateMachine.h"
 
-void StateMachine::Update()
+#include "Net/UnrealNetwork.h"
+
+void UStateMachine::Update()
 {
-	currentState->Update();
+	if (GetOwner()->HasAuthority())
+	{
+		GetState()->Update();
+	}
+	else
+	{
+		
+	}
 }
 
-void StateMachine::TransitionState(FinState* state)
+void UStateMachine::TransitionState(int stateEnum)
 {
-	if (currentState == state)
+	if (GetOwner()->HasAuthority())
 	{
-		return;
+		if (ECurrentState == stateEnum)
+		{
+			return;
+		}
+		if (ECurrentState)
+		{
+			GetState()->OnExit();
+		}
+		ECurrentState = stateEnum;
+		GetState()->OnEnter();
 	}
-	if (currentState)
-	{
-		currentState->OnExit();
-	}
-	currentState = state;
-	currentState->OnEnter();
+}
+
+void UStateMachine::Transition_Replication(int stateEnum)
+{
+	ECurrentState = stateEnum;
+}
+
+void UStateMachine::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(UStateMachine, ECurrentState);
 }

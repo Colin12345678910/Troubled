@@ -8,6 +8,8 @@ public:
 	virtual void OnEnter() override;
 	virtual void OnExit() override;
 	virtual void Update() override;
+
+	virtual void Server_OnActionContext(EActionContext ctx) override;
 	
-	TraitorAimState(StateMachine* StateMachine) : TraitorState(StateMachine) {}
+	TraitorAimState(UStateMachine* StateMachine) : TraitorState(StateMachine) {}
 };

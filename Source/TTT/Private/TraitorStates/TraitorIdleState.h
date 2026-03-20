@@ -9,5 +9,8 @@ public:
 	virtual void OnExit() override;
 	virtual void Update() override;
 
-	TraitorIdleState(StateMachine* sm) : TraitorState(sm) {}
+	//Input
+	virtual void Server_OnActionContext(EActionContext ctx) override;
+
+	TraitorIdleState(UStateMachine* sm) : TraitorState(sm) {}
 };

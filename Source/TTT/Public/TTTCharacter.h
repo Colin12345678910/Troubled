@@ -110,9 +110,5 @@ public:
 
 	/** Returns first person camera component **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
-	//These need to be moved to the statemachine itself
-	TUniquePtr<TraitorAimState> aimState;
-	TUniquePtr<TraitorIdleState> idleState;
 };
 

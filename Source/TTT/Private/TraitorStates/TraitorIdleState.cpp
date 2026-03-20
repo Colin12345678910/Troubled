@@ -9,20 +9,25 @@ void TraitorIdleState::OnEnter()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s"),  TEXT("TraitorIdleState::OnEnter"));
 	auto statemachine = static_cast<UTraitorStateMachine*>(GetStateMachine());
-
-	statemachine->SecondaryStart.BindLambda([=]()
-	{
-		statemachine->TransitionState(statemachine->GetCharacter()->aimState.Get());
-	});
 }
 
 void TraitorIdleState::OnExit()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s"),  TEXT("TraitorIdleState::OnExit"));
 	auto statemachine = static_cast<UTraitorStateMachine*>(GetStateMachine());
-	statemachine->SecondaryEnd.Unbind();
 }
 
 void TraitorIdleState::Update()
 {
+}
+
+void TraitorIdleState::Server_OnActionContext(EActionContext ctx)
+{
+	TraitorState::Server_OnActionContext(ctx);
+
+	if (ctx == EActionContext::SecondaryBegin)
+	{
+		auto statemachine = static_cast<UTraitorStateMachine*>(GetStateMachine());
+		statemachine->TransitionState(ETraitorState::AIM_STATE);
+	}
 }

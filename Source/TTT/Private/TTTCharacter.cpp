@@ -40,9 +40,7 @@ ATTTCharacter::ATTTCharacter()
 
 	statemachine = CreateDefaultSubobject<UTraitorStateMachine>(TEXT("Statemachine"));
 	statemachine->Initialize(this);
-	aimState = MakeUnique<TraitorAimState>(statemachine);
-	idleState = MakeUnique<TraitorIdleState>(statemachine);
-	statemachine->TransitionState(idleState.Get());
+	statemachine->TransitionState(ETraitorState::IDLE_STATE);
 
 	// configure the character comps
 	GetMesh()->SetOwnerNoSee(true);
