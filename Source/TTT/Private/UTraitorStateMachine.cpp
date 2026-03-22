@@ -50,6 +50,9 @@ UTraitorStateMachine::UTraitorStateMachine()
 {
 	transitionStates[ETraitorState::AIM_STATE] = MakeShared<TraitorAimState>(GetBaseMachine());
 	transitionStates[ETraitorState::IDLE_STATE] = MakeShared<TraitorIdleState>(GetBaseMachine());
+	transitionStates[ETraitorState::FIRE_STATE] = MakeShared<TraitorFireState>(GetBaseMachine());
+
+	//SetIsReplicated(true);
 }
 
 void UTraitorStateMachine::Initialize(ATTTCharacter* ch)

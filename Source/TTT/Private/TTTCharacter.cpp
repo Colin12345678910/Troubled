@@ -93,6 +93,16 @@ float ATTTCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 }
 
 
+void ATTTCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	FVector Location = FVector(0, 0, 100.0f);
+	FString DebugText = statemachine->GetState()->GetName();
+
+	DrawDebugString(GetWorld(), Location, DebugText, this, FColor::White, DeltaSeconds, true, 1);
+}
+
 void ATTTCharacter::MoveInput(const FInputActionValue& Value)
 {
 	// get the Vector2D move axis

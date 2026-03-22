@@ -29,8 +29,8 @@ public:
 		auto map = this->GetTransitionStates();
 		return map.contains(ECurrentState) ? map[ECurrentState].Get() : map.begin()->second.Get();
 	};
-private:
-	//Note, this is a raw Int, raw ints should never be passed, but I cannot immediately think of generic way to support any ENUM setup/
-	UPROPERTY(ReplicatedUsing=Transition_Replication)
+protected:
+	//Note, this is a raw Int, raw ints should never be passed, but templates don't work under unreal UProperties/Classes so to maintain flexibility it must remain an int.
+	UPROPERTY(meta = (AllowPrivateAccess = "true"), Replicated, BlueprintReadOnly, Category="-State")
 	int ECurrentState = 0;
 };

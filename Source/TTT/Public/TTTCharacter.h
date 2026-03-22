@@ -70,6 +70,7 @@ public:
 
 protected:
 
+	void Tick(float DeltaSeconds) override;
 	/** Called from Input Actions for movement input */
 	void MoveInput(const FInputActionValue& Value);
 
