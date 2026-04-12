@@ -9,6 +9,7 @@
 #include "Blueprint/UserWidget.h"
 #include "TTT.h"
 #include "Widgets/Input/SVirtualJoystick.h"
+#include "Kismet/GameplayStatics.h"
 
 ATTTPlayerController::ATTTPlayerController()
 {
@@ -19,7 +20,6 @@ ATTTPlayerController::ATTTPlayerController()
 void ATTTPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
 	
 	// only spawn touch controls on local player controllers
 	if (ShouldUseTouchControls() && IsLocalPlayerController())
@@ -35,9 +35,7 @@ void ATTTPlayerController::BeginPlay()
 		} else {
 
 			UE_LOG(LogTTT, Error, TEXT("Could not spawn mobile controls widget."));
-
 		}
-
 	}
 }
 

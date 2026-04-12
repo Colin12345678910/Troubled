@@ -16,14 +16,9 @@ void ATTTGameMode::PostLogin(APlayerController* NewPlayer)
 	Super::PostLogin(NewPlayer);
 	auto World = GetWorld();
 	int p = World->GetGameState()->PlayerArray.Num();
-	UE_LOG(LogTemp, Warning, TEXT("Player Array Size: %d"), p);
+	UE_LOG(LogTemp, Warning, TEXT("Players: %d"), p);
 
 	players.push_back(NewPlayer);
-	
-	if (p >= 2)
-	{
-		InitializeGame();
-	}
 }
 
 void ATTTGameMode::PlayerDied(APlayerController* player)
