@@ -2,6 +2,7 @@
 
 #include "TTTGameMode.h"
 
+#include "TTTPlayerController.h"
 #include "TTTPlayerState.h"
 #include "Algo/RandomShuffle.h"
 #include "GameFramework/GameStateBase.h"
@@ -15,9 +16,16 @@ ATTTGameMode::ATTTGameMode()
 void ATTTGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
+	
 	auto World = GetWorld();
 	int p = World->GetGameState()->PlayerArray.Num();
 	UE_LOG(LogTemp, Warning, TEXT("Players: %d"), p);
+
+	//Are we the first player
+	if (p == 1)
+	{
+		static_cast<ATTTPlayerController*>(NewPlayer)->ChangeToPregameHUD();
+	}
 
 	players.push_back(NewPlayer);
 }

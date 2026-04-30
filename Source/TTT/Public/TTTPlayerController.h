@@ -23,7 +23,15 @@ public:
 
 	/** Constructor */
 	ATTTPlayerController();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameHUD")
+	TSubclassOf<UUserWidget> mainHUD;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GameHUD")
+	TSubclassOf<UUserWidget> pregameHUD;
 
+	// Not very clean, but functional for only 2 different huds
+	void ChangeToMainHUD() { ChangeHUD(mainHUD); }
+	void ChangeToPregameHUD() { ChangeHUD(pregameHUD); }
 protected:
 
 	/** Input Mapping Contexts */
@@ -58,4 +66,9 @@ protected:
 	void MatchStart();
 	/** Returns true if the player should use UMG touch controls */
 	bool ShouldUseTouchControls() const;
+
+	void ChangeHUD(TSubclassOf<UUserWidget> widget);
+
+private:
+	UUserWidget* HUDWidget;
 };

@@ -85,3 +85,20 @@ bool ATTTPlayerController::ShouldUseTouchControls() const
 	// are we on a mobile platform? Should we force touch?
 	return SVirtualJoystick::ShouldDisplayTouchInterface() || bForceTouchControls;
 }
+
+void ATTTPlayerController::ChangeHUD(TSubclassOf<UUserWidget> widget)
+{
+	if (HUDWidget)
+	{
+		HUDWidget->RemoveFromParent();
+		HUDWidget = nullptr;
+	}
+
+	if (widget)
+	{
+		HUDWidget = CreateWidget<UUserWidget>(this, widget);
+
+		if (HUDWidget)
+			HUDWidget->AddToPlayerScreen();
+	}
+}
