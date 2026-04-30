@@ -52,6 +52,10 @@ protected:
 	/** Input mapping context setup */
 	virtual void SetupInputComponent() override;
 
+	UFUNCTION(BlueprintCallable)
+	void RequestMatchStart();
+	UFUNCTION(Server, Reliable)
+	void MatchStart();
 	/** Returns true if the player should use UMG touch controls */
 	bool ShouldUseTouchControls() const;
 };

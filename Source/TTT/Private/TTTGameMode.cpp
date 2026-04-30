@@ -9,6 +9,7 @@
 
 ATTTGameMode::ATTTGameMode()
 {
+	bDelayedStart = true;
 }
 
 void ATTTGameMode::PostLogin(APlayerController* NewPlayer)
@@ -34,8 +35,16 @@ void ATTTGameMode::PlayerDied(APlayerController* player)
 	}
 }
 
+void ATTTGameMode::HandleMatchHasStarted()
+{
+	GEngine->AddOnScreenDebugMessage(0, 10.f, FColor::Red, TEXT("MatchBegin"));
+	InitializeGame();
+}
+
 void ATTTGameMode::InitializeGame()
 {
+	//Setup character variables.
+
 	auto World = GetWorld();
 	auto arr = World->GetGameState()->PlayerArray;
 		Algo::RandomShuffle(arr);

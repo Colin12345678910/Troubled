@@ -8,7 +8,9 @@
 #include "TTTCameraManager.h"
 #include "Blueprint/UserWidget.h"
 #include "TTT.h"
+#include "TTTGameMode.h"
 #include "Widgets/Input/SVirtualJoystick.h"
+
 #include "Kismet/GameplayStatics.h"
 
 ATTTPlayerController::ATTTPlayerController()
@@ -65,6 +67,17 @@ void ATTTPlayerController::SetupInputComponent()
 		}
 	}
 	
+}
+
+void ATTTPlayerController::RequestMatchStart()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Request Match"));
+	MatchStart();
+}
+
+void ATTTPlayerController::MatchStart_Implementation()
+{
+	GetWorld()->GetAuthGameMode<ATTTGameMode>()->StartMatch();
 }
 
 bool ATTTPlayerController::ShouldUseTouchControls() const

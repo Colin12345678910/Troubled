@@ -2,8 +2,3 @@
 
 
 #include "TTTGameState.h"
-
-void ATTTGameState::JoinMatch_Implementation(ATTTCharacter* Character)
-{
-	
-}
